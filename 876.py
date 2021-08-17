@@ -14,3 +14,4 @@ class Solution:
                 return slow.next
             fast = fast.next.next
             slow = slow.next
+            
