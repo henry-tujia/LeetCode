@@ -4,6 +4,7 @@ class ListNode(object):
         self.val = val
         self.next = next
 
+
 def create_linked_list(arr):
     head = ListNode(arr[0])
     cur = head
@@ -45,8 +46,18 @@ class Solution(object):
         head.next = None
         return p_last
 
+    def reverseList2(self, head):
+        def reverseList2_inner(head):
+            if head is None or head.next is None:
+                return head
+            last = reverseList2_inner(head.next)
+            head.next.next = head
+            head.next = None
+            return last
+        return reverseList2_inner(head)
+
 if __name__ == '__main__':
     soul = Solution()
     l1 = create_linked_list([1,2,3,4,5])
 
-    print(print_linked_list(soul.reverseList(l1)))
+    print(print_linked_list(soul.reverseList2(l1)))

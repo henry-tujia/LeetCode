@@ -1,4 +1,5 @@
 import collections
+import itertools
 
 
 class Solution(object):
@@ -15,28 +16,22 @@ class Solution(object):
         news = []
         res = 0
 
-
-        for i in range(index_0):
-            for j in range(index_1):
-                if grid[i][j] == 2:
-                    bads.append((i,j))
-                elif grid[i][j] ==1:
-                    news.append((i,j))
-
+        for i, j in itertools.product(range(index_0), range(index_1)):
+            if grid[i][j] == 2:
+                bads.append((i, j))
+            elif grid[i][j] == 1:
+                news.append((i, j))
 
         visit = collections.deque(bads)
         while visit:
-            m,n = visit.popleft()
-            for row,index in [(m-1,n),(m,n-1),(m+1,n),(m,n+1)]:
-                if 0<=row<index_0 and 0<=index<index_1 and (row,index) in news:
-                    news.remove((row,index))
-                    visit.append((row,index))
+            m, n = visit.popleft()
+            for row, index in [(m-1, n), (m, n-1), (m+1, n), (m, n+1)]:
+                if 0 <= row < index_0 and 0 <= index < index_1 and (row, index) in news:
+                    news.remove((row, index))
+                    visit.append((row, index))
                     dest[row][index] += dest[m][n]+1
-                    res = max(res,dest[row][index])
-        if len(news) >0:
-            return  -1
-        else:
-            return res
+                    res = max(res, dest[row][index])
+        return -1 if news else res
 
 
 class Solution2:
@@ -63,12 +58,10 @@ class Solution2:
                     grid[nr][nc] = 2
                     queue.append((nr, nc, d + 1))
 
-        if any(1 in row for row in grid):
-            return -1
-        return d
+        return -1 if any(1 in row for row in grid) else d
 
 
 if __name__ == '__main__':
     soul = Solution()
-    mat = [[2,1,1],[1,1,0],[0,1,1]]
+    mat = [[2, 1, 1], [1, 1, 0], [0, 1, 1]]
     print(soul.orangesRotting(mat))

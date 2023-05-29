@@ -6,9 +6,10 @@ def combine_new(start,end,num):
     elif end -start +1 - num > 0:
         res = []
         for i in range(end -start +1 - num+1):
-            for item in combine_new(start+1+i,end,num-1):
-                res.append([start+i]+ item)
+            res.extend([start+i]+ item for item in combine_new(start+1+i,end,num-1))
         return res
+
+import copy
 
 class Solution(object):
     def combine(self, n, k):
@@ -17,7 +18,19 @@ class Solution(object):
         :type k: int
         :rtype: List[List[int]]
         """
-        return combine_new(1,n,k)
+        res = []
+        temp = []
+        def combine_inner(start):
+            if len(temp) == k:
+                res.append(copy.deepcopy(temp) )
+                return
+            for i in range(start,n+1):
+                temp.append(i)
+                combine_inner(i+1)
+                temp.pop()
+            return
+        combine_inner(1)
+        return res
 
 
 if __name__ == '__main__':

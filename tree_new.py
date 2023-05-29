@@ -10,9 +10,8 @@ class BinaryTree:
         self.__size = 0
         self.__root = None
         self.__height = 0
-        if serial:
-            if isinstance(serial, list):
-                self.construct(serial)
+        if serial and isinstance(serial, list):
+            self.construct(serial)
 
     # serial should be a list
     def construct(self, serial):

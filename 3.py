@@ -21,6 +21,26 @@ class Solution(object):
             max_size = max(max_size, size_of_window)
 
         return max_size
+    def lengthOfLongestSubstring2(self, s):
+        import collections
+
+        left = 0
+        right = 0
+
+        res = ''
+
+        max_size = 0
+        while right < len(s):
+            current = s[right]
+            if current not in res:
+                res += current
+                if len(res) > max_size:
+                    max_size = len(res)
+            else:
+                left = right
+            right += 1
+
+        return len(res)
 
 
 if __name__ == '__main__':
